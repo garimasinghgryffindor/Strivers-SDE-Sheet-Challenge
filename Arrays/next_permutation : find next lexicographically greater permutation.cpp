@@ -1,7 +1,49 @@
 Problem Statement: Given an array Arr[] of integers, rearrange the numbers of the given array into the lexicographically next greater permutation of numbers.
 
 
-1st approach is brute force-> which is generating all the possible permutations and then directly finding the next permutation
+1st approach is BRUTE FORCE -> which is generating all the possible permutations and then directly finding the next permutation
+
+void swap(int &a,int &b) {
+    int temp = a;
+    a = b;
+    b = temp;
+}
+
+void recur(vector<int>temp,int i,int n,vector<vector<int> >&permut) {
+    if (i == n) {
+        permut.push_back(temp);
+        return;
+    }
+
+    for(int j=i ; j<n ; j++) {
+        swap(temp[i], temp[j]);
+        recur(temp,i+1,n,permut);
+        swap(temp[i], temp[j]);
+    }
+}
+
+vector<int> nextPermutation(vector<int> &permutation, int n)
+{
+    // BRUTE FORCE
+    // generating all possible perut
+    vector<vector<int> > permut;
+    vector<int> temp(permutation);
+    sort(temp.begin(),temp.end());
+    recur(temp,0,n,permut);
+    sort(permut.begin() , permut.end());
+
+    for(int i=0 ; i<permut.size() ; i++) {
+        if(permut[i] == permutation && i+1 < permut.size()) {
+            return permut[i+1];
+        }
+        if(permut[i] == permutation && i+1 <= permut.size()) {
+            return permut[0];
+        }
+    }
+
+    return {};
+}
+
 
 2)   2nd approach is in linear time complexity (mostly)
 
