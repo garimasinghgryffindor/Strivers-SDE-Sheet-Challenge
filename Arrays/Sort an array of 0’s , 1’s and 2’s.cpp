@@ -5,31 +5,29 @@
 3: approach using a two-pointer approach Dutch National Flag Algorithm
 
 
-class Solution {
-public:
-    void swap(int &a, int&b) {
-        int temp = a;
-        a = b;
-        b = temp;
-    }
-    
-    void sortColors(vector<int>& nums) {
-        // using Dutch National Flag Algorithm
-        int low = 0, mid = 0, high = nums.size()-1;
-        while(mid<=high) {
-            // if curr is a 0
-            if(nums[mid] == 0) {
-                swap(nums[low], nums[mid]);
-                mid++;
-                low++;
-            }
-            else if(nums[mid] == 1) {
-                mid++;
-            }
-            else {
-                swap(nums[mid], nums[high]);
-                high--;
-            }
-        }
-    }
-};
+// OPTIMAL
+// DUTCH NATIONAL FLAG ALGORITHM
+// TWO POINTER APPROACH
+void sort012(int *arr, int n)
+{
+   int low = 0, mid = 0, high = n-1;
+
+   // low => positions of 0s
+   // mid => positions of 1s
+   // high => positions of 2s
+
+   while(mid <= high) {
+      // if current element is 0
+      if(arr[mid] == 0) {
+         swap(arr[mid], arr[low]);
+         mid++;
+         low++;
+      } else if(arr[mid] == 1) {
+         // if current element is 1
+         mid++;
+      } else {
+         swap(arr[mid], arr[high]);
+         high--;
+      }
+   }
+}
