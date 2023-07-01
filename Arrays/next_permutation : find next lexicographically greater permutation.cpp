@@ -22,6 +22,7 @@ void recur(vector<int>temp,int i,int n,vector<vector<int> >&permut) {
     }
 }
 
+
 vector<int> nextPermutation(vector<int> &permutation, int n)
 {
     // BRUTE FORCE
@@ -47,6 +48,7 @@ vector<int> nextPermutation(vector<int> &permutation, int n)
 
 2)   2nd approach is in linear time complexity (mostly)
 
+// LONGEST PREFIX MATCH
 Steps->
 
 find first index where a[i] < a[i+1]  from the end => ind1
