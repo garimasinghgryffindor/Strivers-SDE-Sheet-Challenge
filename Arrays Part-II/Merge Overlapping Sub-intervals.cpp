@@ -17,7 +17,7 @@ vector < pair < int, int >> merge(vector < pair < int, int >> & arr) {
         //since the intervals already lies 
         //in the data structure present we continue
         if (!ans.empty()) {
-            if (start <= ans.back().second) {
+            if (end <= ans.back().second) {
                 continue;
             }
         }
