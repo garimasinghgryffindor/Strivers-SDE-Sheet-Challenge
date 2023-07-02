@@ -2,6 +2,32 @@ Find the repeating and missing numbers
 
 Problem Statement: You are given a read-only array of N integers with values also in the range [1, N] both inclusive. Each integer appears exactly once except A which appears twice and B which is missing. The task is to find the repeating and missing numbers A and B where A repeats twice and B is missing.
 
+BRUTE FORCE:
+
+#include <bits/stdc++.h>
+using namespace std;
+
+vector<int> findMissingRepeatingNumbers(vector<int> a) {
+    int n = a.size(); // size of the array
+    int repeating = -1, missing = -1;
+
+    //Find the repeating and missing number:
+    for (int i = 1; i <= n; i++) {
+        //Count the occurrences:
+        int cnt = 0;
+        for (int j = 0; j < n; j++) {
+            if (a[j] == i) cnt++;
+        }
+
+        if (cnt == 2) repeating = i;
+        else if (cnt == 0) missing = i;
+
+        if (repeating != -1 && missing != -1)
+            break;
+    }
+    return {repeating, missing};
+}
+
 Solution 1: Using Count Sort
 
 vector<int> find_missing_repeating(vector<int> array)
