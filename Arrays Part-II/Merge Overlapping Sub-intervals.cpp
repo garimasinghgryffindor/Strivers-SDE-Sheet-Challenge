@@ -25,7 +25,8 @@ vector < pair < int, int >> merge(vector < pair < int, int >> & arr) {
         for (int j = i + 1; j < n; j++) {
             if (arr[j].first <= end) {
                 end = max(end, arr[j].second);
-            }
+            } else {
+                break;
         }
     
         end = max(end, arr[i].second);
