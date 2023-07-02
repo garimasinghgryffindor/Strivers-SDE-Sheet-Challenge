@@ -67,3 +67,60 @@ public:
         
     }
 };
+
+
+// CodingNinjas -> rotate - element-wise
+
+#include <bits/stdc++.h>
+
+// BRUTE FORCE
+void rotateMatrix(vector<vector<int>> &mat, int n, int m)
+{
+    vector<vector<int>> newMat = mat;
+
+    if(m==1 || n==1) {
+        return;
+    }
+
+    int loop = min(m,n);
+
+    for(int i=0 ; i<loop/2 ; i++) {
+        int start_row = i;
+        int start_col = i;
+        int end_row = n-1-i;
+        int end_col = m-1-i;
+        // row-wise traversal
+        for(int j=start_col ; j<end_col ; j++) {
+            int nextPos = j+1;
+            newMat[start_row][nextPos] = mat[start_row][j];
+        }
+       
+        // col-wise traversal
+        for(int j=start_row ; j<end_row ; j++) {
+            int nextPos = j+1;
+            newMat[nextPos][end_col] = mat[j][end_col];
+        }
+       
+        // row-wise traversal
+        for(int j=end_col ; j>start_col ; j--) {
+            int nextPos = j-1;
+            newMat[end_row][nextPos] = mat[end_row][j];
+        }
+        
+        // col-wise traversal
+        for(int j=end_row ; j>start_row ; j--) {
+            int nextPos = j-1;
+            newMat[nextPos][start_col] = mat[j][start_col];
+        }
+    }
+
+    for(int i=0 ; i<n ; i++) {
+        for(int j=0 ; j<m ; j++) {
+            mat[i][j] = newMat[i][j];
+        }
+    }
+
+}
+
+
+
