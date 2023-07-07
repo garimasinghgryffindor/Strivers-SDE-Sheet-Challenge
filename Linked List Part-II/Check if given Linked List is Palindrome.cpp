@@ -77,6 +77,73 @@ public:
 };
 
 
+
+// 2nd way
+
+// OPTIMIZED
+// FINDING THE MIDDLE OF THE LINKED LIST
+// SPLITTING THE LINKED LIST AT THE MID POINT
+// REVERSING THE SECOND HALF OF THE LINKED LIST
+// THEN CHECKING
+
+LinkedListNode<int> * reverse(LinkedListNode<int> *head) {
+    if(!head || !head->next)
+        return head;
+
+
+    LinkedListNode<int> *curr, *next, *prev;
+    LinkedListNode<int> *dummy = new LinkedListNode<int>(0);
+    dummy->next = head;
+    prev = dummy;
+    curr = prev->next;
+    next = curr->next;
+
+    while(next) {
+        curr->next = next->next;
+        next->next = prev->next;
+        prev->next = next;
+        next = curr->next;
+    }
+
+    // print(dummy->next);
+    return dummy->next;
+}
+
+bool isPalindrome(LinkedListNode<int> *head) {
+    if(!head || !head->next) {
+        return true;
+    }
+
+    LinkedListNode<int> * curr = head;
+    
+    // We will tortoise-hare method to find the mid of the linked list
+    LinkedListNode<int> * slow = head, *fast = head;
+    while(fast->next && fast->next->next) {
+        slow = slow->next;
+        fast = fast->next->next;
+    }
+
+    // head of the second half of the linked list
+    LinkedListNode<int> * secondHalf = slow->next;
+    slow->next = NULL;
+
+    // reverse the second half
+    LinkedListNode<int> *newHead = reverse(secondHalf);
+
+    // checking palindrome
+    LinkedListNode<int> *ptr1=head,*ptr2=newHead;
+    while(ptr1 && ptr2) {
+        if(ptr1->data != ptr2->data)
+            return false;
+        ptr1 = ptr1->next;
+        ptr2 = ptr2->next;
+    }
+
+    return true;
+}
+
+
+
 Solution 3:  Further Optimized Solution
 Approach:
 
