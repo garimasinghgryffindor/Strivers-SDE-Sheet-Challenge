@@ -47,4 +47,101 @@ bool chkLength(ListNode * &ptr, int k){
         head->next = reverseKGroup(ptr,k);
         
         return rev;
-    }
+    }
+
+
+
+
+// 2nd way
+
+#include <bits/stdc++.h>
+
+/****************************************************************
+
+    Following is the class structure of the Node class:
+
+        class Node
+        {
+        public:
+	        int data;
+	        Node *next;
+	        Node(int data)
+	        {
+		        this->data = data;
+		        this->next = NULL;
+	        }
+        };
+
+*****************************************************************/
+
+int getLength(Node *head) {
+	int x = 0;
+	while(head) {
+		head = head->next;
+		x++;
+	}
+	return x;
+}
+
+
+Node *getListAfterReverseOperation(Node *head, int n, int b[]){
+
+	if(head == NULL || head->next == NULL) {
+		return head;
+	}
+
+	int block = b[0];
+	int i=0;
+
+	Node * dummy = new Node(0);
+	dummy->next = head;
+
+	Node *prev = dummy;
+	Node * curr;
+	Node * next;
+
+	int length = getLength(head);
+
+	while(prev && length && i<n) {
+		curr = prev->next;
+
+		if(b[i] == 0) {
+			while(i<n && b[i]==0) {
+				i++;
+			}
+			if(b[i]==0 || i==n) {
+				break;
+			}
+		}
+
+		block = b[i];
+		if(block == 1) {
+			prev = curr;
+			length--;
+			i++;
+			continue;
+		}
+
+		if(curr == NULL || i == n) {
+			break;
+		}
+
+		next = curr->next;
+		while(block-1 && next) {
+			block--;
+			curr->next = next->next;
+			next->next = prev->next;
+			prev->next = next;
+			next = curr->next;
+		}
+		length = max(0,length-b[i]);
+
+		i++;
+		prev = curr;
+	}
+
+	return dummy->next;
+}
+
+
+
