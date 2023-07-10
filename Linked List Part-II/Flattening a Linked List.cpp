@@ -10,7 +10,65 @@ Note: The flattened list will be printed using the bottom pointer instead of the
 
 
 Solution:
-Approach:
+
+Approach 1: Brute Force
+#define bottom child
+// BRUTE FORCE APPROACH
+// AS PER ME
+Node *merge(Node*h1, Node*h2) {
+    Node * dummy = new Node(0);
+    dummy->bottom = h1;
+    Node * temp1 = h2;
+    Node * node = dummy->bottom;
+
+    if(node->data > temp1->data) {
+        Node * nxt = temp1->bottom;
+        temp1->bottom = node;
+        dummy->bottom = temp1;
+        temp1 = nxt;
+    }
+
+    while(temp1) {
+        node = dummy->bottom;
+
+        while(node && node->bottom && temp1->data > node->bottom->data) {
+            node = node->bottom;
+        }
+        if(node->bottom == NULL) {
+            node->bottom = temp1;
+            temp1 = temp1->bottom;
+        } else if(temp1->data <= node->bottom->data) {
+            Node * ptr = temp1->bottom;
+            Node * ptr2 = node->bottom;
+            node->bottom = temp1;
+            temp1->bottom = ptr2;
+            temp1 = ptr;
+        }
+    }
+    return dummy->bottom;
+}
+
+Node *flattenLinkedList(Node *root)
+{
+   if(root == NULL || root->next == NULL) return root;
+   Node* temp1 = root;
+   Node* temp2 = root->next;
+   while(temp2){
+       temp1=merge(temp1,temp2);
+       temp2=temp2->next;
+   }
+   Node* temp=temp1;
+   while(temp){
+       temp->next=NULL;
+       temp=temp->bottom;
+   }
+   return temp1;
+}
+
+
+
+    
+Approach 2:
 Since each list, followed by the bottom pointer, are in sorted order. Our main aim is to make a single list in sorted order of all nodes. So, we can think of a merge algorithm of merge sort.
 
 
