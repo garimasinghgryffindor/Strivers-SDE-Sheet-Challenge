@@ -3,8 +3,37 @@ Trapping Rainwater
 Problem Statement: Given an array of non-negative integers representation elevation of ground. Your task is to find the water that can be trapped after rain.
 
 
+Solution 1: Brute Force
 
-Solution 1: Brute force
+// brute force
+long long getTrappedWater(long long* height, int n) {
+    long long sum=0;
+        
+    if(n==1)
+        return 0;
+    
+    for(int i=1 ; i<n ; i++){
+        long long leftMax = 0, rightMax = 0;
+        int j = i;
+        while(j >= 0) {
+            leftMax = max(leftMax , height[j]);
+            j--;
+        }
+        j = i;
+        while(j < n) {
+            rightMax = max(rightMax, height[j]);
+            j++;
+        }
+
+        sum += min(leftMax, rightMax) - height[i];
+    } 
+    
+    return sum;
+}
+
+
+Solution 2: Better Approach
+        // using extra space
 Approach: For each index, we have to find the amount of water that can be stored and we have to sum it up.If we observe carefully the amount the water stored at a particular index is the minimum of maximum elevation to the left and right of the index minus the elevation at that index.
 
 
@@ -36,7 +65,7 @@ int trap(vector<int>& height) {
 
 
 
-Solution 2:Better solution
+Solution 3: Better solution
 Intuition: We are taking O(N) for computing leftMax and rightMax at each index. The complexity can be boiled down to O(1) if we precompute the leftMax and rightMax at each index.
 Approach: Take 2 array prefix and suffix array and precompute the leftMax and rightMax for each index beforehand. Then use the formula min(prefix[I], suffix[i])-arr[i] to compute water trapped at each index.
 
