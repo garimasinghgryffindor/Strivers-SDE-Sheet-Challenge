@@ -8,27 +8,6 @@ Intuition: Using the concept of Backtracking, we will place Queen at different 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // BRUTE FORCE
 
 class Solution {
@@ -89,7 +68,7 @@ public:
                 v++;
             }
             u=x,v=y;
-            // towards top-left
+            // towards bottom-left
             while(u<n && u>=0 && v>=0 && v<n) {
                 if(temp[u][v] == 'Q') {
                     // not valid
