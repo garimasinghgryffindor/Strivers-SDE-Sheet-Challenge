@@ -10,6 +10,61 @@ Assume that the dictionary does not contain duplicate words.
 Solution: Recursion and Backtracking
 
 
+Solution 1:
+
+void recur(string s,unordered_map<string,bool>mp,vector<string>&res,string ans,int idx) {
+    if(idx == s.length()) {
+        res.push_back(ans);
+        return;
+    }
+
+    for(int i=idx ; i<s.length() ; i++) {
+        string word = s.substr(idx,i-idx+1);
+        if(mp[word]) {
+            // if word exists in the dictionary
+            // make a recursive call
+            // also update ans
+            if(idx == 0) {
+                ans += word;
+            } else {
+                ans += " ";
+                ans += word;
+            }
+            recur(s,mp,res,ans,i+1);
+            // backtrack
+            int len = word.length();
+            
+            while(len--) {
+                ans.pop_back();
+            }
+            if(idx != 0) {
+                // make one more pop for extra space which was added
+                ans.pop_back();
+
+            }
+        }
+    }
+
+}
+
+vector<string> wordBreak(string &s, vector<string> &dictionary)
+{
+    vector<string> res;
+    string ans = "";
+    unordered_map<string,bool> mp;
+    for(auto s: dictionary) {
+        mp[s] = true;
+    }
+    recur(s,mp,res,ans,0);;
+    return res;
+}
+
+
+
+
+
+Solution 2: (my solution) using Trie
+
 struct Node {
     Node * links[26];
     bool flag = false;
