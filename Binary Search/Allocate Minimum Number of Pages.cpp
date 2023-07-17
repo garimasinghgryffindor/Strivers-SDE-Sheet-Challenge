@@ -18,52 +18,31 @@ Now, we know the lowest possible answer and the maximum possible answer and for 
 
 
 
-bool isPossible(vector<int>num,int n,long long mid) {
-    int res = 1;
-    long long sum=0;
-    for(int i=0 ; i<num.size() ; i++) {
-        if(sum + num[i] <= mid) {
-            sum += num[i];
-        } else if (num[i] > mid) {
-            return false;
-        } else {
-            res++;
-            sum = num[i];
+#include <bits/stdc++.h>
+bool ispossible(long long & hpd, int& limit, vector<int> &times){
+	long long count = 1, sum = 0;
+	for(int &time: times){
+		if(time>hpd) return false;
+		if(sum+time<=hpd) sum+=time;
+		else {
+			count++;
+			sum = time;
+			}
         }
-        // res++;
-        if(res > n) {
-            return false;
-        }
-    }
-
-    return true;
+	return count<=limit;
 }
 
 long long ayushGivesNinjatest(int n, int m, vector<int> time) 
-{   
-    if(n > m) return -1;
-
-    long long low = time[0], high = 0;
-
-    for(int i=0 ; i<m ; i++) {
-        if(time[i] < low) {
-            low = time[i];
-        }
-        high += time[i];
-    }
-
-    // binary search
-
-    while(low<=high) {
-        // keep searching
-        long long mid = low + (high-low)/2;
-
-        if(isPossible(time,n,mid)) {
-            high = mid - 1;
-        } else {
-            low = mid + 1;
-        }
-    }
-
-    return low;
+{	
+	long long l = 1, r = LLONG_MAX, mid;
+	while(l<r){
+		mid = l+(r-l)/2;
+		if(ispossible(mid, n, time)) r = mid;
+		else l = mid+1;
+	}
+	return l;
 }
+
+
+
+
