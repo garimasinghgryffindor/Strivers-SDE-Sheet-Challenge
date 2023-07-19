@@ -1,4 +1,7 @@
+// HERE I MADE THE PUSH OPERATION COSTLY O(N)
+// AND POP O(N)
 
+// SC -> O(N)
 class Stack {
 
     queue<int>q1,q2;
@@ -20,7 +23,7 @@ class Stack {
         return false;
     }
 
-    void push(int element) {
+    void push(int element) { // O(N)
         q2.push(element);
         while(!q1.empty()) {
             q2.push(q1.front());
@@ -30,7 +33,7 @@ class Stack {
         swap(q1,q2);
     }
 
-    int pop() {
+    int pop() { // O(1)
         if(!size) {
             return -1;
         }
