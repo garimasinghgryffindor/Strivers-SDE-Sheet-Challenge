@@ -32,3 +32,32 @@ void sortStack(stack<int> &stk)
 
     swap(stk, st);
 }
+
+
+
+// OPTIMAL
+// USING RECURSION
+#include <bits/stdc++.h>
+void merge(stack<int>&stk, int num) {
+    if(stk.empty() || num >= stk.top()) {
+        stk.push(num);
+        return;
+    }
+
+    int tp = stk.top();
+    stk.pop();
+    merge(stk, num);
+    merge(stk, tp);
+}
+
+void sortStack(stack<int> &stk)
+{
+	if(stk.empty()) {
+        return;
+    }
+    int num = stk.top();
+    stk.pop();
+    sortStack(stk);
+    
+    merge(stk, num);
+}
