@@ -103,3 +103,28 @@ int n = heights.size();
       }
       return maxA;
     }
+
+
+// OPTIMAL APPROACH 2
+// USING MONOTONIC STACK
+int largestRectangle(vector < int > & heights) {
+  stack<pair<int,int>> monotonic;
+  int n = heights.size();
+  heights.push_back(-1);
+  
+  int res = 0;
+  for(int i=0 ; i<n+1 ; i++) {
+      int x = 0;
+      while(!monotonic.empty() && (monotonic.top()).first>=heights[i]) {
+          auto top = monotonic.top();
+          int h = top.first, steps = top.second; 
+          monotonic.pop();
+          x += steps;
+          res = max(res , h*x);
+      }
+      monotonic.push({heights[i], x+1});
+  }
+  
+  return res;
+}
+
