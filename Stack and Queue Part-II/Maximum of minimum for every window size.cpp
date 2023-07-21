@@ -23,3 +23,25 @@ vector<int> maxMinWindow(vector<int> a, int n) {
     }
     return res;
 }
+
+
+// optimal
+// somewhat
+vector<int> maxMinWindow(vector<int> a, int n) {
+    vector<int>res;
+    vector<int>temp(a.begin(), a.end());
+    int ele = *max_element(a.begin(), a.end());
+    res.push_back(ele);
+
+    for(int i=2 ; i<=n ; i++) {
+        int ans = INT_MIN;
+        for(int j=0 ; j<=a.size()-i ; j++) {
+            if(temp[j] > temp[j+1]) {
+                temp[j] = temp[j+1];
+            }
+            ans = max(ans, temp[j]);
+        }
+        res.push_back(ans);
+    }
+    return res;
+}
