@@ -22,3 +22,40 @@ int findCelebrity(int n) {
 	}
 	return -1;
 }
+
+
+// OPTIMAL
+// using stack
+int findCelebrity(int n) {
+	stack<int>st;
+	for(int i=0 ; i<n ; i++) {
+		st.push(i);
+	}
+
+	while(st.size() > 1) {
+		int a = st.top();
+		st.pop();
+		int b = st.top();
+		st.pop();
+
+		if(!knows(a,b)) {
+			st.push(a);
+		} else {
+			st.push(b);
+		}
+	}
+
+	// to cross verify
+	int potentialPerson = st.top();
+	for(int i=0 ; i<n ; i++) {
+		if(knows(potentialPerson, i)) {
+			return -1;
+		}
+
+		if(i!=potentialPerson && !knows(i, potentialPerson)) {
+			return -1;
+		}
+	}
+
+	return potentialPerson;
+}
