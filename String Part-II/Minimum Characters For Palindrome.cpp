@@ -19,3 +19,25 @@ int minCharsforPalindrome(string str) {
 
 	return str.length()-1;
 }
+
+
+// OPTIMAL
+int minCharsforPalindrome(string str) {
+	int n = str.length();
+	int i=0, j=n-1;
+	int k = j;
+	while(j>=i) {
+		if(str[i] == str[j]) {
+			i++;
+			j--;
+		} else {
+			i = 0;
+			j = k-1;
+			k = j;
+		}
+	}
+
+	return n-(k+1);
+}
+
+
