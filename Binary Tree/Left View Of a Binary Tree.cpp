@@ -20,3 +20,40 @@ vector<int> getLeftView(TreeNode<int> *root)
     preorder(root, res, 0);
     return res;
 }
+
+
+
+// SECOND APPROACH
+// using LEVEL ORDER TRAVERSAL
+// LEVEL ORDER TRAVERSAL = BFS
+void levelorder(TreeNode<int> *node, vector<int>&res) {
+    if(!node) {
+        return;
+    }
+    
+    queue<TreeNode<int>* > q;
+    q.push(node);
+
+    while(!q.empty()) {
+        int tp = q.front()->data;
+        res.push_back(tp);
+        int n = q.size();
+        for(int i=0 ; i<n ; i++) {
+            TreeNode<int>*curr = q.front();
+            if(curr->left) {
+                q.push(curr->left);
+            }
+            if(curr->right) {
+                q.push(curr->right);
+            }
+            q.pop();
+        }
+    }
+}
+
+vector<int> getLeftView(TreeNode<int> *root)
+{
+    vector<int>res;
+    levelorder(root, res);
+    return res;
+}
