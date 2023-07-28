@@ -24,3 +24,28 @@ vector<int> pathInATree(TreeNode<int> *root, int x)
 
 
 
+// using DFS
+bool dfs(TreeNode<int> *root, int x, vector<int>&res) {
+	if(!root) return false;
+
+	res.push_back(root->data);
+	if(root->data == x) return true;
+
+	if(dfs(root->left,x,res) || dfs(root->right,x,res)) {
+		return true;
+	}
+
+	res.pop_back();
+	return false;
+}
+
+vector<int> pathInATree(TreeNode<int> *root, int x)
+{
+    // let us use dfs
+	vector<int>res;
+	dfs(root,x,res);
+	return res;
+}
+
+
+
