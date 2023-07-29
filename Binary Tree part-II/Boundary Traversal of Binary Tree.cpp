@@ -1,66 +1,79 @@
 // let us try this thing
-
-void leftTraversal(TreeNode<int>*root, vector<int>&vec,unordered_map<TreeNode<int>*,bool>&mp) {
-    if(!root) return;
-    
-    if(root->left || root->right) {
-        vec.push_back(root->data);
-        mp[root] = true;
+bool isLeaf(TreeNode<int>* root){
+    if(root->left==NULL and root->right==NULL){
+        return true;
     }
-
-    if(root->left)
-        leftTraversal(root->left, vec, mp);
-    else 
-        leftTraversal(root->right, vec, mp);
+    return false;
 }
 
-void rightTraversal(TreeNode<int>*root,vector<int>&vec,unordered_map<TreeNode<int>*,bool>&mp) {
-    if(!root) return;
-    if(!mp[root] && (root->left || root->right)) {
-        vec.push_back(root->data);
-        mp[root] = true;
+void addLeft(TreeNode<int>* root,vector<int>&res){
+
+    TreeNode<int>*cur=root->left;
+
+    while(cur!=NULL){
+        if(!isLeaf(cur)){
+            res.push_back(cur->data);
+        }
+
+        if(cur->left==NULL){
+            cur=cur->right;
+        }
+        else{
+            cur=cur->left;
+        }
     }
-    
-    if(root->right)
-        rightTraversal(root->right, vec, mp);
-    else
-        rightTraversal(root->left, vec, mp);
 }
 
-void leafTraversal(TreeNode<int>*root, vector<int>&vec, unordered_map<TreeNode<int>*,bool>&mp) {
-    if(!root) return;
-    if(!root->left && !root->right && !mp[root]) {
-        vec.push_back(root->data);
-        mp[root] = true;
+void addRight(TreeNode<int>* root,vector<int>&res){
+
+    TreeNode<int>*cur=root->right;
+
+    stack<int>st;
+    while (cur != NULL) {
+        if (!isLeaf(cur)) {
+            st.push(cur->data);
+        }
+
+        if (cur->right == NULL) {
+            cur = cur->left;
+        } else {
+            cur = cur->right;
+        }
     }
 
-    leafTraversal(root->left, vec,mp);
-    leafTraversal(root->right,vec,mp);
+    while (!st.empty()) {
+        res.push_back(st.top());
+        st.pop();
+    }
+}
+
+void addLeaf(TreeNode<int>* root,vector<int>&res){
+
+    if(isLeaf(root)){
+        res.push_back(root->data);
+        return;
+    }
+
+    if(root->left!=NULL){
+        addLeaf(root->left,res);
+    }
+
+    if(root->right!=NULL){
+        addLeaf(root->right,res);
+    }
 }
 
 vector<int> traverseBoundary(TreeNode<int>* root){
-    // left edge traversal
-    // leaf nodes traversal
-    // right edge traversal
-
-    unordered_map<TreeNode<int>*, bool> mp;
-
-    if(!root) return {};
-    if(!root->left && !root->right) return {root->data};
-
-    vector<int>left,leaf,right;
-
-    leftTraversal(root,left,mp);
-    leafTraversal(root,leaf,mp);
-    rightTraversal(root,right,mp);
-
-    reverse(right.begin(), right.end());
-
     vector<int>res;
-    copy(left.begin(), left.end(), back_inserter(res));
-    copy(leaf.begin(), leaf.end(), back_inserter(res));
-    copy(right.begin(), right.end(), back_inserter(res));
+    if(root==NULL){
+        return res;
+    }
+    if(!isLeaf(root)){
+        res.push_back(root->data);
+    }
+    addLeft(root,res);
+    addLeaf(root,res);
+    addRight(root,res);
     return res;
+
 }
-
-
