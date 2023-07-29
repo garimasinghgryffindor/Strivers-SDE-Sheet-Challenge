@@ -41,3 +41,34 @@ int lowestCommonAncestor(TreeNode<int> *root, int x, int y)
 }
 
 
+
+// OPTIMAL APPROACH
+// USING RECURSION
+TreeNode<int>* recur(TreeNode<int>* root, int x, int y) {
+    if(!root) return NULL;
+    if(root->data == x || root->data == y)
+        return root;
+    
+    auto left = recur(root->left,x,y);
+    auto right = recur(root->right,x,y);
+    if(left && right) {
+        return root;
+    }
+
+    if(left) {
+        return left;
+    }
+    if(right) {
+        return right;
+    }
+}
+
+int lowestCommonAncestor(TreeNode<int> *root, int x, int y)
+{
+    auto node = recur(root,x,y);
+    return node->data;
+}
+
+
+
+
