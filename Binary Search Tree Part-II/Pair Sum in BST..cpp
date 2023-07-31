@@ -13,11 +13,7 @@ bool recur(BinaryTreeNode<int>*root, int k, unordered_set<int>&st) {
     }
 
     st.insert(root->data);
-    bool l = recur(root->left,  k, st);
-    if(l) return true;
-
-    bool r = recur(root->right, k, st);
-    return r;
+    return recur(root->left,  k, st) || recur(root->right, k, st);
 }
 
 bool pairSumBst(BinaryTreeNode<int> *root, int k)
