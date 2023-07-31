@@ -1,3 +1,4 @@
+// APPROACH 1
 class BSTiterator
 {
     public: 
@@ -41,3 +42,36 @@ class BSTiterator
         return true;
     }
 };
+
+
+// APPROACH 2
+class BSTiterator
+{
+    public: 
+    stack<TreeNode<int>*> st;
+    BSTiterator(TreeNode<int> *root)
+    {
+        pushall(root);
+    }
+
+    int next()
+    {
+        auto ptr = st.top();
+        st.pop();
+        pushall(ptr->right);
+        return ptr->data;
+    }
+
+    bool hasNext()
+    {
+        return (!st.empty());
+    }
+
+    void pushall(TreeNode<int>* root) {
+        while(root) {
+            st.push(root);
+            root = root->left;
+        }
+    }
+};
+
