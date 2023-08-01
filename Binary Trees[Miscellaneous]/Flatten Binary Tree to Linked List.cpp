@@ -21,3 +21,24 @@ BinaryTreeNode<int>* BTtoDLL(BinaryTreeNode<int>* root) {
 
     return dummy->right;
 }
+
+
+// APPROACH 2
+// DOES NOT REQUIRE 2 TRAVERSALS
+// 1 TRAVERSAL
+void recur(BinaryTreeNode<int>* root, BinaryTreeNode<int>*&head) {
+    if(!root) return;
+
+    recur(root->right, head);
+    root->right = head;
+    if(head) head->left = root;
+    head = root;
+
+    recur(root->left, head); 
+}
+
+BinaryTreeNode<int>* BTtoDLL(BinaryTreeNode<int>* root) {
+    BinaryTreeNode<int>*head = NULL;
+    recur(root,head);
+    return head;
+}
