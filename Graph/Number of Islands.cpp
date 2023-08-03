@@ -33,8 +33,10 @@ int numIslands(vector<vector<char>>& grid) {
 
 
 
-// USING DFS
-    void dfs(vector<vector<char>>graph, int r, int c, vector<vector<bool>>&visited) {
+class Solution {
+public:
+    // USING DFS
+    void dfs(vector<vector<char>>&graph, int r, int c, vector<vector<bool>>&visited) {
         visited[r][c] = true;
         
         vector<int>rows = {-1, 0, 1, 0};
@@ -43,6 +45,7 @@ int numIslands(vector<vector<char>>& grid) {
         for(int i=0 ; i<4 ; i++) {
             if(r+rows[i]>=0 && r+rows[i]<graph.size() && c+cols[i]>=0 && c+cols[i]<graph[0].size()) {
                 if(graph[r+rows[i]][c+cols[i]] == '1' && !visited[r+rows[i]][c+cols[i]]) {
+                    graph[r+rows[i]][c+cols[i]] = '0';
                     dfs(graph, r+rows[i], c+cols[i], visited);
                 }
             }
@@ -66,3 +69,4 @@ int numIslands(vector<vector<char>>& grid) {
 
         return count;
     }
+};
