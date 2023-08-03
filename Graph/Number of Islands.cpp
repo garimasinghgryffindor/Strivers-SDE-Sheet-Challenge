@@ -2,7 +2,7 @@
 // NOTE
 // NOTE
 
-// basically using bfs 
+// basically using BFS 
 int numIslands(vector<vector<char>>& grid) {
     vector<vector<bool>> visit(grid.size(),vector<bool>(grid[0].size(),false));
     int count = 0;
@@ -30,3 +30,39 @@ int numIslands(vector<vector<char>>& grid) {
 
     return count;
 }
+
+
+
+// USING DFS
+    void dfs(vector<vector<char>>graph, int r, int c, vector<vector<bool>>&visited) {
+        visited[r][c] = true;
+        
+        vector<int>rows = {-1, 0, 1, 0};
+        vector<int>cols = {0, 1, 0, -1};
+        
+        for(int i=0 ; i<4 ; i++) {
+            if(r+rows[i]>=0 && r+rows[i]<graph.size() && c+cols[i]>=0 && c+cols[i]<graph[0].size()) {
+                if(graph[r+rows[i]][c+cols[i]] == '1' && !visited[r+rows[i]][c+cols[i]]) {
+                    dfs(graph, r+rows[i], c+cols[i], visited);
+                }
+            }
+        }
+    }
+    
+    int numIslands(vector<vector<char>>& grid) {
+        int r = grid.size();
+        int c = grid[0].size();
+        vector<vector<bool>> visited(r, vector<bool>(c, false));
+        int count = 0;
+        
+        for(int i=0 ; i<r ; i++) {
+            for(int j=0 ; j<c ; j++) {
+                if(!visited[i][j] && grid[i][j]=='1') {
+                    dfs(grid, i, j, visited);
+                    count++;
+                }
+            }
+        }
+
+        return count;
+    }
