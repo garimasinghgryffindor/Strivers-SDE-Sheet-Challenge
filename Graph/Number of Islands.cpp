@@ -1,3 +1,7 @@
+// NOTE :  CHECK OUT THIS OTHER PROBLEM AS WELL CALLED AS NUMBER OF DISTINCTTTT ISLANDS
+// NOTE
+// NOTE
+
 // basically using bfs 
 int numIslands(vector<vector<char>>& grid) {
     vector<vector<bool>> visit(grid.size(),vector<bool>(grid[0].size(),false));
