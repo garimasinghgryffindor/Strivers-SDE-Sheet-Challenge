@@ -1,5 +1,7 @@
-#include <bits/stdc++.h>
+// SSSP
+// GREEDY
 // using priority queue 
+
 vector<int> dijkstra(vector<vector<int>> &vec, int vertices, int edges, int source) {
     vector<pair<int, int>> adj[vertices];
     for(int i=0 ; i<edges ; i++) {
