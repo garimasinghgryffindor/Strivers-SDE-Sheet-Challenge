@@ -49,3 +49,23 @@ int maximumProduct(vector<int> &arr, int n)
 }
 
 
+
+// APPROACH 3
+// using Kadane's Algorithm
+int maximumProduct(vector<int> &arr, int n)
+{
+	int prod1 = arr[0], prod2 = arr[0], temp = 1;
+	int res = arr[0];
+	for(int i=1 ; i<n ; i++) {
+		temp = max({arr[i], prod1*arr[i], prod2*arr[i]});
+		prod2 = min({arr[i], prod1*arr[i], prod2*arr[i]});
+		prod1 = temp;
+		res = max(prod1, res);
+	}
+
+	return res;
+}
+
+
+
+
