@@ -55,3 +55,35 @@ public:
 };
 
 
+
+class Solution {
+public:
+    // MEMOIZATION
+    vector<vector<int>>dp;
+    
+    int recur(string&s1, string&s2, int i, int j) {
+        if(i < 0) {
+            return (j+1);
+        }
+        if(j < 0) {
+            return (i+1);
+        }
+        
+        if(dp[i][j] != -1) return dp[i][j];
+        
+        if(s1[i] == s2[j]) {
+            return 0 + recur(s1, s2, i-1, j-1);
+        }
+        
+        return dp[i][j] = 1+min({recur(s1,s2,i-1,j-1), recur(s1,s2,i-1,j), recur(s1,s2,i,j-1) });
+    }
+    
+    int minDistance(string word1, string word2) {
+        int n = word1.length(), m = word2.length();
+        
+        dp.resize(n, vector<int>(m, -1));
+        
+        return recur(word1, word2, n-1, m-1);
+    }
+};
+
