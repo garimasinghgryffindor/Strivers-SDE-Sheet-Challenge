@@ -12,7 +12,6 @@ int recur(vector<int>&rack, int idx, int prevWeight) {
 
 	return max(take, notTake);
 }
-
 int maxIncreasingDumbbellsSum(vector<int> &rack, int n)
 {
 	return recur(rack, 0, 0);
@@ -34,9 +33,31 @@ int recur(vector<int>&rack, int idx, int prevWeight,vector<vector<int>>&dp) {
 
 	return (dp[idx][prevWeight+1] = max(take, notTake));
 }
-
 int maxIncreasingDumbbellsSum(vector<int> &rack, int n)
 {
 	vector<vector<int>>dp(n, vector<int>(n+1, -1));
 	return recur(rack, 0, -1,dp);
 }
+
+
+
+// TABULATION
+// just like LIS
+int maxIncreasingDumbbellsSum(vector<int> &rack, int n)
+{
+	vector<int>msis(n);
+	for( int i = 0 ; i < n ; i++ ) 
+		msis[i] = rack[i]; 
+	
+	for ( int i = 1; i < n; i++ ) 
+        for ( int j = 0; j < i; j++ ) 
+            if (rack[i] > rack[j] && msis[i] < msis[j] + rack[i]) 
+                msis[i] = msis[j] + rack[i]; 
+	
+	int ans = 0;
+	for(int i=0 ; i<n ; i++) {
+		ans = max(ans, msis[i]);
+	}
+	return ans;
+}
+
