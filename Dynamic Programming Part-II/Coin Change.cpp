@@ -38,3 +38,24 @@ long countWaysToMakeChange(int *denominations, int n, int value)
 }
 
 
+
+// USING TABULATION
+long countWaysToMakeChange(int *denominations, int n, int value)
+{
+    vector<vector<long>>dp(n+1, vector<long>(value+1, 0));
+
+    for(int i=0 ; i<n ; i++) dp[i][0] = 1;
+
+    for(int i = 0; i < n; i++) {
+        for(int j = 0; j <= value; j++) {
+            long notTake = dp[i][j];
+            long take = 0;
+            if(j >= denominations[i]) {
+                take = dp[i+1][j-denominations[i]];
+            }
+            dp[i+1][j] = take + notTake;
+        }
+    }
+
+    return dp[n][value];
+}
