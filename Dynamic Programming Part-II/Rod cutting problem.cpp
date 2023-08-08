@@ -1,4 +1,5 @@
 
+// USING RECURSION
 int recur(vector<int>&prices, int n, int idx, int prevCut) {
 	if(idx > n) return 0;
 
