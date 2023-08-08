@@ -43,3 +43,29 @@ int eggDrop(int n, int k)
 }
 
 
+
+// using TABULATION
+int eggDrop(int n, int k) 
+{
+    vector<vector<int>>dp(n+1, vector<int>(k+1, 0));
+    for(int i = 0; i <= k; i++) dp[1][i] = i;
+    for(int i = 0; i <= n; i++) { dp[i][0] = 0; dp[i][1] = 1; }
+    
+    for(int floor = 2; floor <= k; floor++) {
+        for(int eggs = 2; eggs <= n; eggs++) {
+            int mn = INT_MAX;
+            for(int i = 1; i <= floor; i++) {
+                int ifBreaks = 1 + dp[eggs-1][i-1];
+                int ifNotBreaks = 1 + dp[eggs][floor-i];
+                int breaks = max(ifBreaks, ifNotBreaks); // in worst case
+                mn = min(breaks, mn); // minimum number of attempts
+            }
+            
+            dp[eggs][floor] = mn;
+        }
+    }
+    
+    return dp[n][k];
+}
+
+
