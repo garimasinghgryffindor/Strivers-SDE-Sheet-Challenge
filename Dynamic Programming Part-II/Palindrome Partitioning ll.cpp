@@ -55,4 +55,29 @@ int palindromePartitioning(string str)
 }
 
 
+// using TABULATION
+bool chkPalindrome(string s) {
+    for(int i=0 ; i<s.length()/2 ; i++) {
+        if(s[i] != s[s.length() - i -1]) return false;
+    }
+    return true;
+}
+int palindromePartitioning(string str)
+{
+    int n = str.length();
+    vector<int>dp(n+1, 0);
 
+    for(int idx = n-1; idx >= 0; idx--) {
+        int mn = INT_MAX;
+        for(int k = idx; k < n; k++) {
+            string curr = str.substr(idx, k-idx+1);
+            if(chkPalindrome(curr)) {
+                int cuts = 1 + dp[k+1];
+                mn = min(cuts, mn);
+            }
+        }
+        dp[idx] = mn;
+    }
+
+    return dp[0] - 1;
+}
