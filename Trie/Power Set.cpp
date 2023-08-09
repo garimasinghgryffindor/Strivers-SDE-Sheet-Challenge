@@ -22,3 +22,26 @@ vector<vector<int>> pwset(vector<int>v)
     sort(res.begin(), res.end());
     return res;
 }
+
+
+
+void recur(vector<int>&v,int idx,int n,vector<vector<int>>&res,vector<int>temp) {
+    if(idx == n) {res.push_back(temp); return;}
+
+    // either i will not take that index
+    recur(v,idx+1,n,res,temp);
+
+    // or i will
+    temp.push_back(v[idx]);
+    recur(v,idx+1,n,res,temp);
+}
+vector<vector<int>> pwset(vector<int>v)
+{
+    // using RECURSION
+    int n = v.size();
+    sort(v.begin(), v.end());
+    vector<vector<int>>res;
+    recur(v,0,n,res,{});
+    return res;
+}
+
