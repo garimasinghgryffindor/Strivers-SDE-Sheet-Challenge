@@ -27,47 +27,43 @@ int zAlgorithm(string s, string p, int n, int m)
 // OPTIMAL
 int zAlgorithm(string s, string p, int n, int m)
 {
-	// we will create a Z-Array
-	// POV: Also do the KMP algorithm for String Pattern Matching
-
-	string str = p + '$' + s;
-	int l = str.length();
+	// OPTIMAL approach
+	string newString = p + '$' + s;
+	int len = newString.length();
 	int res = 0;
 
-	int L = 0, R = 0, k;
+	vector<int>z(len,0);
+	int L = 0,R = 0;
 
-	vector<int>z(l,0);
-
-	for(int i=1 ; i<l ; ++i) {
-		if (i > R)
-        {
-            L = R = i;
-
-            while (R<l && str[R-L] == str[R])
-                R++;
-            z[i] = R-L;
-            R--;
-        } else {
-			k = i-L;
-			if (z[k] < R-i+1)
-                z[i] = z[k];
-			else {
+	for(int i = 1; i < len; i++) {
+		if(i > R) {
+			L = R = i;
+			while(R < len && newString[R] == newString[R-L]) {
+				R++;
+			}
+			z[i] = R-L;
+			R--;
+		} else {
+			// in the range
+			// we can use the already stored values; (i am saying "CAN")
+			// can only use when i + z[] < R
+			int k1 = i - L;
+			if(i + z[k1] - 1 < R) {
+				// using already computed values
+				z[i] = z[k1];
+			} else {
+				// recalculating because matched index went beyond range. basically we have not checked there already
 				L = i;
-                while (R<l && str[R-L] == str[R])
-                    R++;
-                z[i] = R-L;
-                R--;
+				while(R < len && newString[R] == newString[R-L]) {
+					R++;
+				}
+				z[i] = R-L;
+				R--;
 			}
 		}
-	}
 
-	for(int i=0 ; i<l ; ++i) {
-		if(z[i] == p.length()) {
-			res++;
-		}
+		if(z[i] == p.length()) res++;
 	}
 
 	return res;
 }
-
-
