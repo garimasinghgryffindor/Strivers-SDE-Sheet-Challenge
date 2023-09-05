@@ -1,4 +1,5 @@
 // NAIVE
+O((M+N)^2)
 int zAlgorithm(string s, string p, int n, int m)
 {
 	// NAIVE approach
@@ -25,6 +26,8 @@ int zAlgorithm(string s, string p, int n, int m)
 }
 
 // OPTIMAL
+Time Complexity: O(m+n), where m is length of pattern and n is length of text.
+Auxiliary Space: O(m+n)
 int zAlgorithm(string s, string p, int n, int m)
 {
 	// OPTIMAL approach
