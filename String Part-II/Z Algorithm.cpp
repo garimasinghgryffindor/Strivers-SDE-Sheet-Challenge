@@ -1,32 +1,28 @@
 // NAIVE
 int zAlgorithm(string s, string p, int n, int m)
 {
-	// we will create a Z-Array
-	// POV: Also do the KMP algorithm for String Pattern Matching
+	// NAIVE approach
 	string newString = p + '$' + s;
 	int len = newString.length();
 	int res = 0;
 
 	vector<int>z(len,0);
-	for(int i=1 ; i<len ; i++) {
-		int k=i;
-		for(int j=0 ; j<len-i ; j++) {
-			if(newString[k] == newString[j]) {
-				k++;
+
+	for(int i = 0; i <len; i++) {
+		int x = 0;
+		for(int j = i; j < len; j++) {
+			if(newString[x] == newString[j]) {
+				x++;
 			} else {
 				break;
 			}
 		}
-		z[i] = k-i;
-		if(z[i] == p.length()) {
-			res++;
-		}
+		z[i] = x;
+		if(x == p.length()) res++;
 	}
 
 	return res;
 }
-
-
 
 // OPTIMAL
 int zAlgorithm(string s, string p, int n, int m)
